@@ -116,6 +116,8 @@
 	* separated concerns
 	* are happier :)
 
+* Note: we can break it down even more (on NAP Extranet project, we started creating a file for 'business' logic, a file for View logic (which includes more visual Components) for each app module)
+
 ### Applying the same logic:
 
 	// Available Component Definition
@@ -160,7 +162,6 @@
 new ListChooserPage();
 
 ## What to do with this?
-
 ### Testing **MyList** more easily, at first glance:
 * check if's being correctly initiated:
 	* if it finds the items throught the selectors
@@ -250,3 +251,6 @@ On **jQuery** apps, it's on the DEV responsibility to organize the code so that 
 * Reporters
 	* [Karma Coverage](https://github.com/karma-runner/karma-coverage) - gives statement, line, function and branch coverage
 	* and more...
+
+# Let's do some testing, then!
+

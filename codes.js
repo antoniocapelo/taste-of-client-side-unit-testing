@@ -83,7 +83,7 @@ function AvailableComponent($context, handleAvailableListClick) {
     this.removeItem = function($item) {
     };
 
-    $component.on('click', handleAvailableListClick);
+    $component.on('click', handleAvailableListClick || function() {});
 }
 
 
@@ -98,7 +98,7 @@ function ListChooserPage() {
         var $clickedEL = $(this);
         $.ajax(...);
         function onSucces() {
-            availableComponent.remove APIItem($clickedEL);
+            availableComponent.removeItem($clickedEL);
             myListComponent.addItem($clickedEL.text());
         }
     };
