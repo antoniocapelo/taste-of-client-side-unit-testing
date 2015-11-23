@@ -14,7 +14,9 @@ describe('ListChooserPage', function () {
         listChooser = new ListChooserPage();
 
         expect(myListConstructorSpy).toHaveBeenCalled();
-        expect(availableConstructorSpy).toHaveBeenCalledWith($container, listChooser.handleAvailableListClick);
+        expect(availableConstructorSpy)
+          .toHaveBeenCalledWith($container,
+                                listChooser.handleAvailableListClick);
     });
 
     it('should call endpoint X and on success removeItem from available and addItem do myList', function () {
