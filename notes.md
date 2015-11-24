@@ -1,4 +1,16 @@
-# A taste of JS Unit Testing
+### A taste of
+# client-side  unit testing
+
+[@antoniocapelo](www.twitter.com/antoniocapelo)
+
+---
+
+## Unit Tests
+
+----
+
+#### Cool, right?
+![cool](https://media.giphy.com/media/6htA45chmBJYI/giphy.gif)
 
 ----
 
@@ -15,16 +27,32 @@
 
 ----
 
+### and..
+* JavaScript is a dynamically typed language so it comes with almost no help from the compiler - more easier to break if something changes (or if we code it wrong)
+
+----
+
+
+        // Cannot read property 'length' of undefined
+
+        // undefined is not a function
+
+anyone?
+
+----
+
 ### Obstacles
-![Coverage Example](http://media.giphy.com/media/R6xi8dXsRhIjK/giphy.gif)
+![Obstacle](https://media.giphy.com/media/dbtDDSvWErdf2/giphy.gif)
 - it takes time, and we got features to deliver - we have to make space (i.e. give adequate points to US's) on the sprint grooming
+
+
+----
+
+![Obstacle](http://media.giphy.com/media/R6xi8dXsRhIjK/giphy.gif)
 - it can involve some refactoring when begining to test an already existing codebase - start as soon as possible
 
 ---
 
-## Quick mention on BDD?
-
----
 
 # JS Unit Testing 
 
@@ -39,20 +67,9 @@
 
 ----
 
-* test the returned value of **'public methods** and current value of 'public' properties of the component
-
-----
-
-* JavaScript is a dynamically typed language so it comes with almost no help from the compiler - more easier to break if something changes (or if we code it wrong)
-
-----
-
-
-        // Cannot read property 'length' of undefined
-    
-        // undefined is not a function
-
-anyone?
+*Rule of thumb*
+---
+* test the returned value of *'public methods'* and current value of *'public properties'* of the component
 
 ---
 
@@ -60,6 +77,7 @@ anyone?
 
 ----
 
+##  Sample app
 ![Sample App](/img/sample_app.png)
 
 
@@ -173,7 +191,7 @@ By creating the ``MyListComponent`` we can:
 	* separated concerns
 	* are happier :)
 
-![happier](http://media3.giphy.com/media/doUu2ByZDbPYQ/giphy.gif)
+![happier](https://media.giphy.com/media/YVPkjfe2E0XAs/giphy.gif)
 
 
 ----
@@ -236,23 +254,23 @@ We can break it down even more (on NAP Extranet project, we started creating a f
 
 ----
 
-### Testing "**MyList**" more easily ---- MUDAR, DEVIA FALAR DO AVAILABLELIST
+### Test *AvailableList*  component more easily
 
 ----
 
 ### At first glance:
 * check if it's being correctly initiated:
 	* if it finds the items throught the selectors
-	* if the ``getItemCount`` public method returns the expected value
-* check if the ``addItem`` method builds the item correctly and appends it to the list
+	* if the ``removeItem`` public method has the expected behavior
+* check if the click event delegation is correctly set up
  
 
 ----
 
-### Testing the **ListChooserPage** Component:
-* check if it ınitates correctly
-	* if if searches (and finds) it's selector
-	* if it instantiates its components
+### Testing the *ListChooserPage* Component:
+* check if it initiates correctly
+	* if searches (and finds) its selectors
+	* if instantiates its dependencies
 * if its click handler function is called when clicking its bound element and if it does what's expected:
 	* ajax call with certain parameters and on success:
 	* call availableComponent ``removeItem``
@@ -262,8 +280,8 @@ We can break it down even more (on NAP Extranet project, we started creating a f
 ----
 
 ### In the end we realize that
-* the **List** components become responsible of their internal representational logic + internal jQuery stuff and of wiring up and delegating their event handlers - that's what we're going to test
-* the **Page** component is in charge of  the page logic, making ajax calls, setting up the event handler functions, etc - that's what we're going to test
+* *List* component became responsible for their internal representational logic + internal jQuery stuff and for wiring up their event handlers - that's what we're going to test
+* **Page** component is in charge of the page logic, making ajax calls, setting up the event handler functions, etc - that's what we're going to test
 
 
 ---
@@ -272,8 +290,9 @@ We can break it down even more (on NAP Extranet project, we started creating a f
 
 ----
 
+### Test files
 
-Normally all the test cases related to the same part of the app are grouped into the same test file. In our previous example, we'd have 3 specs (one forEach() component).
+Normally all the test cases related to the same part of the app are grouped into the same test file. In our previous example, we'd have 3 test files (one forEach() component).
 
 ----
 
@@ -330,7 +349,7 @@ A spy only exists in the describe or it block in which it is defined, and will b
 ----
 
 
-### spies
+#### how they look like
 	it("should call the myComp method", function() {
 		spyOn(myComp, 'getBoolValue');
 		myComp.methodThatAlsoCallsGetBoolValue();
@@ -342,29 +361,34 @@ A spy only exists in the describe or it block in which it is defined, and will b
 ----
 
 ### fixtures
-On **AngularJS**, testing is given straight out-of-the-box, the framework itself can detect templates used in directives, **ngMock** module can inject and mock dependencies. An initial approach is well documented [here](https://docs.angularjs.org/guide/unit-testing).
+On **AngularJS**, testing is given straight out-of-the-box, the framework itself can detect templates used in directives, **ngMock** module can inject and mock dependencies.
+
+An initial approach is well documented [here](https://docs.angularjs.org/guide/unit-testing).
 
 ----
 
 ### fixtures
-On **jQuery** apps, it's on the dev responsibility to organize the code so that it's testable.
+On **jQuery** apps, the dev is more responsible for organizing the code so that it's testable.
 
 Also, for testing components with DOM logic, it's necessary to inject HTML content into the tests so that jQuery has something to run against - **fixtures**.
 
 ---
 
-## Tools of the Trade
+# Tools of the Trade
+
+![Folder Structure](https://media.giphy.com/media/kftafApR3TYcg/giphy.gif)
+
+----
 
 * [Karma](http://karma-runner.github.io/) - Spectacular Test Runner for Javascript
-* Test runnersjjjhhhjj
+* Test runners
 	* [mocha](https://mochajs.org/) - test framework for JS, normally used with:
-		* [chai](http://chaijs.com/) - assertion library (for using ``assert``, ``should`` and ``expect``
+		* [chai](http://chaijs.com/) - assertion library (stuff lik ``assert``, ``should`` and ``expect``)
 		* [sinon](http://sinonjs.org/) - test spies, stubs and mocks
 	* [Jasmine](jasmine.github.io) - simpler solution (although less powerfull) gives you a behavior-driven development testing framework + ``expect``, spies, etc in one package
 
 ----
 
-## Tools of the Trade
 * [Jasmine-jQuery](https://github.com/velesin/jasmine-jquery) - set of matchers and fixture loaders for jquery
 * Reporters
 	* [Karma Coverage](https://github.com/karma-runner/karma-coverage) - gives statement, line, function and branch coverage
@@ -373,11 +397,12 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ---
 
-# Let's do some testing, then!
+## Let's do some testing, then!
+![do it!](https://media.giphy.com/media/87xihBthJ1DkA/giphy.gif)
 
 ----
 
-## Testing ListChooserPage Component
+## Testing *ListChooserPage* Component
 
     describe('ListChooserPage', function () {
       var listChooserPage;
@@ -423,7 +448,7 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ----
 
-## Testing availableList Component
+## Testing *AvailableList* Component
 
     describe('AvailableComponent', function () {
         var availableList;
@@ -463,10 +488,18 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ----
 
-### Reporting
-
-![Coverage Example](/img/coverage-example.png)
+### it's flexible
+![flexible](https://media.giphy.com/media/D7MPavzY5YsKY/giphy.gif)
 
 ----
+
+
+### Reporting
+
+![Coverage Example](https://raw.githubusercontent.com/martinmicunda/martinmicunda.github.io/master/images/posts/coverage.png)
+
+---
+
+### Questions?
 
 ![Coverage Example](http://img-comment-lol.9cache.com/media/10cf151a142541505822654970_700wa_0.gif)
