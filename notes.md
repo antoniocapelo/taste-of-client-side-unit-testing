@@ -77,7 +77,7 @@ anyone?
 
 ----
 
-##  Sample app
+##  [Sample app](./demo/example.html)
 ![Sample App](/img/sample_app.png)
 
 
@@ -380,7 +380,7 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ----
 
-* [Karma](http://karma-runner.github.io/) - Spectacular Test Runner for Javascript
+* [Karma](http://karma-runner.github.io/) - 'Spectacular' Test Runner for Javascript
 * Test runners
 	* [mocha](https://mochajs.org/) - test framework for JS, normally used with:
 		* [chai](http://chaijs.com/) - assertion library (stuff lik ``assert``, ``should`` and ``expect``)
