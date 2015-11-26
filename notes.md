@@ -1,7 +1,7 @@
 ### A taste of
 # client-side  unit testing
 
-[@antoniocapelo](www.twitter.com/antoniocapelo)
+[@antoniocapelo](http://www.twitter.com/antoniocapelo)
 
 ---
 
