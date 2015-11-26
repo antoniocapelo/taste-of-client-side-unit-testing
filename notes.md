@@ -171,6 +171,12 @@ anyone?
 
 	}
 
+	module.exports = {
+		create: function($context, handleAvailableListClick) {
+			return new AvailableListComponent($context, handleAvailableListClick);
+		}
+	};
+
 ----
 
 ### What happened?
@@ -219,9 +225,15 @@ We can break it down even more (on NAP Extranet project, we started creating a f
 				...
 		};
 
-    // delegate click handler
+		// delegate click handler
 		$component.on('click', handleAvailableListClick);
 	}
+
+	module.exports = {
+		create: function($context, handleAvailableListClick) {
+			return new AvailableListComponent($context, handleAvailableListClick);
+		}
+	};
 
 ----
 
@@ -230,8 +242,8 @@ We can break it down even more (on NAP Extranet project, we started creating a f
 	function ListChooserPage() {
 		var $page = $('#container');
 
-		var myListComponent = new MyListComponent($page);
-		var availableComponent = new AvailableComponent($page, handleAvailableListClick);
+		var myListComponent= MyListComponent.create($page);
+		var availableListComponent = AvailableListComponent.create($page, handleAvailableListClick);
 
 	 function handleAvailableListClick() {
 		var $clickedEL = $(this);
@@ -246,7 +258,7 @@ We can break it down even more (on NAP Extranet project, we started creating a f
 		this.handleAvailableListClick = handleAvailableListClick;
 	}
 
-	new ListChooserPage();
+	ListChooserPage.create();
 
 ---
 
@@ -405,44 +417,70 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 ## Testing *ListChooserPage* Component
 
     describe('ListChooserPage', function () {
-      var listChooserPage;
+        var ListChooserPage = require('../../components/ListChooserPageComponent');
+        var listChooser;
+        (...)
 
       beforeEach(function () {
-         loadFixtures('pageFixture.html');
+        loadFixtures('listChooserPage.html');
+        myList = jasmine.createSpyObj('myList', ['addItem']);
+        availableList = jasmine.createSpyObj('availableList', ['removeItem']);
       });
 
       it('should initiate correctly', function () {
         // should check if the ListChooserPage instantiates its dependencies
         // set up spies
-        var myListConstructorSpy = spyOn(window, 'MyListComponent');
-        var availableConstructorSpy = spyOn(window, 'AvailableComponent');
+        spyOn(AvailableComponent, 'create');
+        spyOn(MyListComponent, 'create');
         var $container = $('#container');
 
-        listChooser = new ListChooserPage();
+        listChooser = ListChooserPage.create();
 
-        expect(myListConstructorSpy).toHaveBeenCalled();
-        expect(availableConstructorSpy)
-          .toHaveBeenCalledWith($container, listChooser.handleAvailableListClick);
+        expect(MyListComponent.create).toHaveBeenCalled();
+        expect(AvailableComponent.create)
+            .toHaveBeenCalledWith($container, listChooser.handleAvailableListClick);
       });
 
       it('should call endpoint X and on success removeItem from available and addItem do myList', function () {
-        // set up spies
-        var myListSpy = spyOn(window, 'MyListComponent').and.callFake(function() {
-            return jasmine.createSpyObj('myList', ['addItem']);
+        spyOn(MyListComponent, 'create').and.callFake(function() {
+                return myList;
+            });
+        spyOn(AvailableComponent, 'create').and.callFake(function() {
+            return availableList;
         });
-        var availableSpy = spyOn(window, 'AvailableComponent').and.callFake(function() {
-            return jasmine.createSpyObj('availableList', ['removeItem']);
-        });
-        spyOn($.fn, 'ajax').and.callFake(function() {
+        spyOn($, 'ajax').and.callFake(function() {
             var d = $.Deferred();
-            d.resolve();
+            d.resolve({});
             return d.promise();
         });
+        var $container = $('#container');
 
-        listChooser = new ListChooserPage();
-        ListChooser.handleAvailableListClick();
-        expect(myListSpy.addItem).toHaveBeenCalled();
+        listChooser = ListChooserPage.create();
+        listChooser.handleAvailableListClick();
+
+        expect(myList.addItem).toHaveBeenCalled();
         expect(availableList.removeItem).toHaveBeenCalled();
+      });
+
+      it('should call endpoint X and if error should not call any other fn', function () {
+          spyOn(MyListComponent, 'create').and.callFake(function() {
+                  return myList;
+              });
+          spyOn(AvailableComponent, 'create').and.callFake(function() {
+              return availableList;
+          });
+          spyOn($, 'ajax').and.callFake(function() {
+              var d = $.Deferred();
+              d.reject();
+              return d.promise();
+          });
+          var $container = $('#container');
+
+          listChooser = ListChooserPage.create();
+          listChooser.handleAvailableListClick();
+
+          expect(myList.addItem).not.toHaveBeenCalled();
+          expect(availableList.removeItem).not.toHaveBeenCalled();
       });
     });
 
@@ -458,17 +496,23 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
         });
 
         it('should initiate correctly', function () {
-            ...
+            // set up spies
+            var $context = $('#jasmine-fixtures');
+            spyOn($context, 'find').and.callThrough();
+            spyOn(AvailableListComponent, 'create').and.callThrough();
+
+            availableList = AvailableListComponent.create($context);
+            expect($context.find).toHaveBeenCalledWith('.available');
         });
 
         it('should call the handleAvailableListClick callback', function () {
             // set up spies
             var handleAvailableListClickSpy = jasmine.createSpy('callback');
-            var $context = $('#container');
+            var $context = $('#jasmine-fixtures');
             var $available = $('.available');
 
-            availableList = new availableList($context, handleAvailableListClickSpy);
-            $available.trigger('click');
+            availableList =  AvailableListComponent.create($context, handleAvailableListClickSpy);
+            $available.find('li').trigger('click');
             expect(handleAvailableListClickSpy).toHaveBeenCalled();
         });
     });
