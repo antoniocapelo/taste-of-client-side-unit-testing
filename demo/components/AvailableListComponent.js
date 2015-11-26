@@ -17,9 +17,14 @@ function AvailableListComponent($context, handleAvailableListClick) {
     };
 
     (function initComponent(){
+        console.log('it is on!',handleAvailableListClick);
     })();
 
     $component.find('li').on('click', handleAvailableListClick || function() {});
 }
 
-module.exports = AvailableListComponent;
+module.exports = {
+    create: function($context, handleAvailableListClick) {
+        return new AvailableListComponent($context, handleAvailableListClick);
+    }
+};

@@ -18,41 +18,55 @@ function AvailableListComponent($context, handleAvailableListClick) {
     };
 
     (function initComponent(){
+        console.log('it is on!',handleAvailableListClick);
     })();
 
     $component.find('li').on('click', handleAvailableListClick || function() {});
 }
 
-module.exports = AvailableListComponent;
+module.exports = {
+    create: function($context, handleAvailableListClick) {
+        return new AvailableListComponent($context, handleAvailableListClick);
+    }
+};
 
 },{"jquery":5}],2:[function(require,module,exports){
 var $ = require('jquery');
- var AvailableListComponent = require('./AvailableListComponent');
- var MyListComponent = require('./MyListComponent');
+var AvailableListComponent = require('./AvailableListComponent');
+var MyListComponent = require('./MyListComponent');
 
 function ListChooserPageComponent() {
     var $page = $('#container');
+    var URL = 'http://jsonplaceholder.typicode.com/posts';
 
-    var myListComponent    = new MyListComponent($page);
-    var availableListComponent = new AvailableListComponent($page, handleAvailableListClick);
+    var myListComponent        = MyListComponent.create($page);
+    var availableListComponent = AvailableListComponent.create($page, handleAvailableListClick);
 
-   function handleAvailableListClick() {
+    function handleAvailableListClick() {
         var $clickedEL = $(this);
-        //$.ajax(...);
         $page.addClass('loading');
-        window.setTimeout(function() {
+        $.ajax(URL, {
+            timeout: 1000
+        }).then(function() {
             availableListComponent.removeItem($clickedEL);
             myListComponent.addItem($clickedEL.text());
+        }).always(function() {
             $page.removeClass('loading');
+        });
+        window.setTimeout(function() {
         }, 1000);
-    };
+    }
 
     // Public 
     this.handleAvailableListClick = handleAvailableListClick;
 }
 
 
-module.exports = ListChooserPageComponent;
+module.exports = {
+    create: function() {
+        return new ListChooserPageComponent()
+    }
+};
 
 },{"./AvailableListComponent":1,"./MyListComponent":3,"jquery":5}],3:[function(require,module,exports){
 var $ = require('jquery');
@@ -97,13 +111,17 @@ function MyListComponent($context) {
     initComponent();
 }
 
-module.exports = MyListComponent;
+module.exports = {
+    create: function($ctx) {
+        return new MyListComponent($ctx);
+    }
+};
 
 },{"jquery":5}],4:[function(require,module,exports){
  console.log('Welcome to my application')
  var ListChooserPage = require('./components/ListChooserPageComponent');
 
- new ListChooserPage();
+ ListChooserPage.create();
 
 
 },{"./components/ListChooserPageComponent":2}],5:[function(require,module,exports){

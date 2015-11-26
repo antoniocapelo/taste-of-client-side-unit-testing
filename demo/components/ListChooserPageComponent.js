@@ -1,27 +1,36 @@
 var $ = require('jquery');
- var AvailableListComponent = require('./AvailableListComponent');
- var MyListComponent = require('./MyListComponent');
+var AvailableListComponent = require('./AvailableListComponent');
+var MyListComponent = require('./MyListComponent');
 
 function ListChooserPageComponent() {
     var $page = $('#container');
+    var URL = 'http://jsonplaceholder.typicode.com/posts';
 
-    var myListComponent    = new MyListComponent($page);
-    var availableListComponent = new AvailableListComponent($page, handleAvailableListClick);
+    var myListComponent        = MyListComponent.create($page);
+    var availableListComponent = AvailableListComponent.create($page, handleAvailableListClick);
 
-   function handleAvailableListClick() {
+    function handleAvailableListClick() {
         var $clickedEL = $(this);
-        //$.ajax(...);
         $page.addClass('loading');
-        window.setTimeout(function() {
+        $.ajax(URL, {
+            timeout: 1000
+        }).then(function() {
             availableListComponent.removeItem($clickedEL);
             myListComponent.addItem($clickedEL.text());
+        }).always(function() {
             $page.removeClass('loading');
+        });
+        window.setTimeout(function() {
         }, 1000);
-    };
+    }
 
     // Public 
     this.handleAvailableListClick = handleAvailableListClick;
 }
 
 
-module.exports = ListChooserPageComponent;
+module.exports = {
+    create: function() {
+        return new ListChooserPageComponent()
+    }
+};

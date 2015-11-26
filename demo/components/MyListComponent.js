@@ -40,4 +40,8 @@ function MyListComponent($context) {
     initComponent();
 }
 
-module.exports = MyListComponent;
+module.exports = {
+    create: function($ctx) {
+        return new MyListComponent($ctx);
+    }
+};
