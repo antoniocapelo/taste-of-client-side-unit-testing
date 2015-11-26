@@ -10,7 +10,6 @@ function AvailableListComponent($context, handleAvailableListClick) {
 
     // Private
     var $component = $context.find(compSelectors.component);
-        console.log($context.find('.available').attr('class'));
     
 
     // Public API

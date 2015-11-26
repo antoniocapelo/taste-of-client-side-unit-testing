@@ -11,6 +11,7 @@ function AvailableListComponent($context, handleAvailableListClick) {
 
     // Private
     var $component = $context.find(compSelectors.component);
+    
 
     // Public API
     this.removeItem = function($item) {
@@ -18,7 +19,6 @@ function AvailableListComponent($context, handleAvailableListClick) {
     };
 
     (function initComponent(){
-        console.log('it is on!',handleAvailableListClick);
     })();
 
     $component.find('li').on('click', handleAvailableListClick || function() {});
