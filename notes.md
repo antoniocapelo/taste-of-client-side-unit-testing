@@ -532,6 +532,53 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ----
 
+### This Demo Project
+
+![Folder Structure](/img/demo_structure.png)
+
+----
+
+#### Entry point: karma.conf.js
+
+        // list of files / patterns to load in the browser
+        files: [
+            'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+            'test/fixtures/*.html*',
+            'test/**/*-spec.js'
+        ],
+
+        // frameworks to use
+        frameworks: ['jasmine-jquery','jasmine', 'browserify'],
+
+        // preprocess matching files before serving them to the browser
+        preprocessors: {
+            'test/**/*.js': [ 'browserify' ]
+        },
+
+        plugins: [
+            'karma-phantomjs-launcher',
+            'karma-chrome-launcher',
+            'karma-jasmine-jquery',
+            'karma-jasmine',
+            'karma-browserify'
+        ],
+
+----
+
+#### Running tests
+
+
+        // on package.json
+        ...
+        "scripts": {
+             "test": "./node_modules/.bin/karma start karma.conf.js"
+        },
+
+        // on terminal
+        npm test
+
+----
+
 ### it's flexible
 ![flexible](https://media.giphy.com/media/D7MPavzY5YsKY/giphy.gif)
 
