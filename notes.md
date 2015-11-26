@@ -544,6 +544,12 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ---
 
-### Questions?
+## Questions?
 
-![Coverage Example](http://img-comment-lol.9cache.com/media/10cf151a142541505822654970_700wa_0.gif)
+---
+
+
+``git checkout`` [this](git@github.com:antoniocapelo/taste-of-client-side-unit-testing.git)
+
+
+![git repo](http://img-comment-lol.9cache.com/media/10cf151a142541505822654970_700wa_0.gif)
