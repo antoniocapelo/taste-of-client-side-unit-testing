@@ -202,7 +202,7 @@ By creating the ``MyListComponent`` we can:
 
 ----
 
-We can break it down even more (on NAP Extranet project, we started creating a file for 'business' logic and a file for View logic (which includes more visual Components) for each app module)
+We can break it down even more (on my current project, we started creating a file for 'business' logic and a file for View logic (which includes more visual Components) for each app module)
 
 ----
 
@@ -292,8 +292,8 @@ We can break it down even more (on NAP Extranet project, we started creating a f
 ----
 
 ### In the end we realize that
-* *List* component became responsible for their internal representational logic + internal jQuery stuff and for wiring up their event handlers - that's what we're going to test
-* **Page** component is in charge of the page logic, making ajax calls, setting up the event handler functions, etc - that's what we're going to test
+* *List* component became responsible for its internal representational logic + internal jQuery stuff and for wiring up their event handlers - that's what we're going to test
+* *Page* component is in charge of the page logic, making ajax calls, setting up the event handler functions, etc - that's what we're going to test
 
 
 ---
@@ -401,6 +401,7 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ----
 
+* [Karma-Browserify](https://github.com/nikku/karma-browserify) - Karma plugin for testing our browserifiy code (used in this demo)
 * [Jasmine-jQuery](https://github.com/velesin/jasmine-jquery) - set of matchers and fixture loaders for jquery
 * Reporters
 	* [Karma Coverage](https://github.com/karma-runner/karma-coverage) - gives statement, line, function and branch coverage
@@ -591,12 +592,22 @@ Also, for testing components with DOM logic, it's necessary to inject HTML conte
 
 ---
 
+
 # Questions?
+
+---
+
+## Reference links
+
+* [Introduction To JavaScript Unit Testing](http://www.smashingmagazine.com/2012/06/introduction-to-javascript-unit-testing/)
+* [Writing Testable JavaScript](https://www.youtube.com/watch?v=OzjogCFO4Zo)
+* [Unit Testing JavaScript Using Jasmine ](http://bittersweetryan.github.io/jasmine-presentation)
 
 ---
 
 
 ``git checkout`` [this](https://github.com/antoniocapelo/taste-of-client-side-unit-testing)
 
-
 ![git repo](http://img-comment-lol.9cache.com/media/10cf151a142541505822654970_700wa_0.gif)
+
+Thanks!
