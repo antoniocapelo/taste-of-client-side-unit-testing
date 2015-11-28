@@ -1,5 +1,6 @@
-### A taste of
-# client-side  unit testing
+### A Taste of
+# Unit Testing
+#### for the Client-side
 
 [@antoniocapelo](http://www.twitter.com/antoniocapelo)
 
